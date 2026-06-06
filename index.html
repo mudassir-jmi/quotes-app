@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuoteSphere • Inspirational Quotes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap');
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .quote-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .quote-card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
+    .quote-text { font-family: 'Playfair Display', serif; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200 min-h-screen">
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <!-- Header -->
+    <header class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
+      <div>
+        <h1 class="text-5xl font-bold tracking-tight bg-gradient-to-r from-violet-400 to-fuchsia-500 bg-clip-text text-transparent">
+          QuoteSphere
+        </h1>
+        <p class="text-zinc-400 mt-2 text-lg">Discover wisdom from the greatest minds</p>
+      </div>
+      
+      <div class="flex items-center gap-4">
+        <button onclick="fetchRandomQuote()" 
+                class="px-6 py-3 bg-violet-600 hover:bg-violet-700 rounded-2xl flex items-center gap-2 font-medium transition-all active:scale-95">
+          <i class="fas fa-dice"></i>
+          Random Quote
+        </button>
+        
+        <button onclick="copyAllQuotes()" 
+                class="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-2xl flex items-center gap-2 font-medium transition-all">
+          <i class="fas fa-copy"></i>
+          Copy All
+        </button>
+      </div>
+    </header>
+
+    <!-- Filters -->
+    <div class="flex flex-wrap gap-4 mb-10 bg-zinc-900/50 backdrop-blur-lg p-6 rounded-3xl border border-zinc-800">
+      <div class="flex-1 min-w-[200px]">
+        <label class="block text-sm text-zinc-400 mb-2">Search</label>
+        <div class="relative">
+          <input id="searchInput" 
+                 onkeyup="filterQuotes()" 
+                 type="text" 
+                 placeholder="Search quotes or authors..." 
+                 class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4 focus:outline-none focus:border-violet-500">
+          <i class="fas fa-search absolute right-5 top-1/2 -translate-y-1/2 text-zinc-500"></i>
+        </div>
+      </div>
+      
+      <div>
+        <label class="block text-sm text-zinc-400 mb-2">Page</label>
+        <div class="flex items-center gap-3 bg-zinc-800 rounded-2xl px-4 py-4">
+          <button onclick="prevPage()" class="p-2 hover:bg-zinc-700 rounded-xl transition"><i class="fas fa-chevron-left"></i></button>
+          <span id="currentPage" class="font-mono w-12 text-center">1</span>
+          <button onclick="nextPage()" class="p-2 hover:bg-zinc-700 rounded-xl transition"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+      
+      <div class="flex items-end">
+        <button onclick="fetchQuotes()" 
+                class="px-8 py-4 bg-white text-black font-semibold rounded-2xl hover:bg-zinc-200 transition flex items-center gap-2">
+          <i class="fas fa-sync"></i>
+          Refresh
+        </button>
+      </div>
+    </div>
+
+    <!-- Quotes Grid -->
+    <div id="quotesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Populated by JS -->
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex justify-center mt-12 gap-4">
+      <button onclick="prevPage()" 
+              class="px-8 py-4 bg-zinc-900 hover:bg-zinc-800 rounded-2xl flex items-center gap-3">
+        <i class="fas fa-arrow-left"></i> Previous
+      </button>
+      <button onclick="nextPage()" 
+              class="px-8 py-4 bg-violet-600 hover:bg-violet-700 rounded-2xl flex items-center gap-3">
+        Next <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Random Quote Modal -->
+  <div id="randomModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-lg flex items-center justify-center z-50">
+    <div class="max-w-lg w-full mx-4 bg-zinc-900 rounded-3xl p-10 border border-zinc-700">
+      <div id="randomQuote" class="quote-text text-2xl leading-relaxed italic text-center"></div>
+      <div id="randomAuthor" class="text-right mt-6 text-violet-400 font-medium"></div>
+      
+      <div class="flex gap-4 mt-10">
+        <button onclick="closeModal()" class="flex-1 py-4 border border-zinc-700 rounded-2xl hover:bg-zinc-800">Close</button>
+        <button onclick="copyRandomQuote()" class="flex-1 py-4 bg-violet-600 rounded-2xl">Copy Quote</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
