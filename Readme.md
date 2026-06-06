@@ -14,7 +14,7 @@ A beautiful, fully responsive quotes listing web application built with HTML, Ta
 
 ## 🚀 Live Demo
 
-[Live Project Link]()  
+[Live Project Link](https://mudassir-jmi.github.io/quotes-app)  
 
 
 ## 🛠️ Technologies Used
